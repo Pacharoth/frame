@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Digital Campaign Frame</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.js.iife.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.css"/>
 </head>
 <body>
   <main class="app">
     <header class="hero">
       <div>
-        <p class="eyebrow">#WeWillNeverForgetOurHero</p>
         <h1>Build your campaign frame</h1>
         <p class="lede">
           Upload your picture, place it behind the campaign frame, preview it live, and download the final artwork.
@@ -20,10 +21,10 @@
 
     <section class="panel">
       <div class="controls">
-        <label class="file-picker">
+        <label class="file-picker" id="dropZone">
           <input type="file" id="photoInput" accept="image/*">
           <span class="cta">Upload your photo</span>
-          <span class="hint">PNG or JPG, square works best</span>
+          <span class="hint">Drag & drop or click. PNG or JPG, square works best.</span>
         </label>
 
         <div class="frame-select">
@@ -106,8 +107,8 @@
         </div>
 
         <div class="btn-row">
-          <button id="previewBtn" type="button">Preview</button>
-          <button id="downloadBtn" type="button" disabled>Download PNG</button>
+          <button id="previewBtn" type="button" class="btn tonal">Update preview</button>
+          <button id="downloadBtn" type="button" class="btn filled" disabled>Download PNG</button>
         </div>
       </div>
 

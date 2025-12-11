@@ -20,6 +20,7 @@ const textSizeValue = document.getElementById("textSizeValue");
 const textRotationInput = document.getElementById("textRotation");
 const textRotationValue = document.getElementById("textRotationValue");
 const colorPalette = document.getElementById("colorPalette");
+const dropZone = document.getElementById("dropZone");
 
 const CANVAS_SIZE = 1080;
 const DOWNLOAD_NAME = "wewillneverforget-hero.png";
@@ -178,6 +179,10 @@ function resetPhotoTransform() {
 
 function handlePhoto(file) {
   if (!file) return;
+  if (!file.type.startsWith("image/")) {
+    setStatus("Please drop an image file.");
+    return;
+  }
   const reader = new FileReader();
   reader.onload = (ev) => {
     const img = new Image();
@@ -229,6 +234,7 @@ function getActiveText() {
 
 function syncTextControls() {
   const active = getActiveText();
+  const hasActive = Boolean(active);
   if (active) {
     textInput.value = active.text;
     textSizeInput.value = active.size;
@@ -240,6 +246,10 @@ function syncTextControls() {
     textSizeValue.textContent = `${textSizeInput.value}px`;
     textRotationValue.textContent = `${textRotationInput.value}°`;
   }
+  doneTextBtn.disabled = !hasActive;
+  deleteTextBtn.disabled = !hasActive;
+  textSizeInput.disabled = !hasActive;
+  textRotationInput.disabled = !hasActive;
 }
 
 function addText() {
@@ -255,7 +265,7 @@ function addText() {
   };
   state.texts.push(newText);
   setActiveText(newText);
-  setStatus("Text added. Drag to position; adjust size or rotation as needed.");
+  setStatus("Text added. Drag to position; adjust size or rotation, then hit Done.");
   renderCanvas();
 }
 
@@ -304,10 +314,32 @@ function deleteActiveText() {
   state.texts = state.texts.filter((t) => t.id !== state.activeTextId);
   setActiveText(null);
   renderCanvas();
+  setStatus("Text removed.");
 }
 
 photoInput.addEventListener("change", (event) => {
   const [file] = event.target.files;
+  handlePhoto(file);
+});
+
+["dragenter", "dragover"].forEach((evt) => {
+  dropZone.addEventListener(evt, (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    dropZone.classList.add("dragover");
+  });
+});
+
+["dragleave", "drop"].forEach((evt) => {
+  dropZone.addEventListener(evt, (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    dropZone.classList.remove("dragover");
+  });
+});
+
+dropZone.addEventListener("drop", (event) => {
+  const [file] = event.dataTransfer.files;
   handlePhoto(file);
 });
 
@@ -357,6 +389,12 @@ doneTextBtn.addEventListener("click", () => {
 });
 deleteTextBtn.addEventListener("click", deleteActiveText);
 textInput.addEventListener("input", updateActiveTextFromInput);
+textInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    addText();
+  }
+});
 textSizeInput.addEventListener("input", updateActiveTextSize);
 textRotationInput.addEventListener("input", updateActiveTextRotation);
 
