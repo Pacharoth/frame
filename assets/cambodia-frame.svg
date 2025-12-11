@@ -1,0 +1,90 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="ringGradient" x1="120" y1="120" x2="960" y2="960" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff3d6a"/>
+      <stop offset="0.45" stop-color="#b72d92"/>
+      <stop offset="1" stop-color="#245bf6"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="white" stop-opacity="0.45"/>
+      <stop offset="0.35" stop-color="white" stop-opacity="0.15"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="flagRed" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e71f40"/>
+      <stop offset="1" stop-color="#ff5a4b"/>
+    </linearGradient>
+    <linearGradient id="flagBlue" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#1c45d6"/>
+      <stop offset="1" stop-color="#2d7bff"/>
+    </linearGradient>
+    <linearGradient id="flagShadow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="barGradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c41532"/>
+      <stop offset="1" stop-color="#7c0b3a"/>
+    </linearGradient>
+    <filter id="flagDrop" x="100" y="150" width="410" height="600" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-opacity="0.28" />
+    </filter>
+    <path id="arcTop" d="M 160 540 A 380 380 0 0 1 920 540" />
+    <path id="arcBottom" d="M 160 540 A 380 380 0 0 0 920 540" />
+    <path id="arcLeft" d="M 540 160 A 380 380 0 0 1 540 920" />
+    <path id="arcRight" d="M 540 920 A 380 380 0 0 1 540 160" />
+  </defs>
+
+  <!-- Outer ring -->
+  <circle cx="540" cy="540" r="420" fill="none" stroke="url(#ringGradient)" stroke-width="200" stroke-linecap="round"/>
+  <circle cx="540" cy="540" r="420" fill="none" stroke="url(#shine)" stroke-width="200" stroke-linecap="round" style="mix-blend-mode:screen"/>
+
+  <!-- Flag ribbon -->
+  <g filter="url(#flagDrop)">
+    <path d="M140 260C230 215 320 180 470 170L470 340C330 345 230 380 140 415Z" fill="url(#flagBlue)"/>
+    <path d="M140 415C230 380 330 350 470 340L470 510C330 520 230 555 140 600Z" fill="url(#flagRed)"/>
+    <path d="M140 600C230 555 330 525 470 510L470 640C330 650 230 680 140 720Z" fill="url(#flagBlue)"/>
+    <path d="M140 260C230 215 320 180 470 170L470 640C320 650 220 690 140 720Z" fill="url(#flagShadow)" opacity="0.18"/>
+
+    <!-- Temple icon -->
+    <g transform="translate(205 360)" fill="#fff">
+      <rect x="40" y="70" width="20" height="80" />
+      <rect x="80" y="50" width="20" height="100" />
+      <rect x="120" y="35" width="20" height="115" />
+      <rect x="160" y="50" width="20" height="100" />
+      <rect x="200" y="70" width="20" height="80" />
+      <polygon points="100,40 140,10 180,40 140,40" />
+      <rect x="100" y="115" width="100" height="20" />
+      <rect x="80" y="135" width="140" height="20" />
+      <rect x="60" y="155" width="180" height="20" />
+    </g>
+  </g>
+
+  <!-- Text around the ring -->
+  <g font-family="'Avenir Next', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="32" font-weight="800" fill="#ffffff">
+    <text text-anchor="middle">
+      <textPath xlink:href="#arcTop" startOffset="50%">#THAILANDSTARTEDTHEWAR</textPath>
+    </text>
+    <text text-anchor="middle">
+      <textPath xlink:href="#arcBottom" startOffset="50%">#CAMBODIANEEDPEACE</textPath>
+    </text>
+    <text text-anchor="middle">
+      <textPath xlink:href="#arcLeft" startOffset="50%">#JUSTICEFORCAMBODIA</textPath>
+    </text>
+    <text text-anchor="middle">
+      <textPath xlink:href="#arcRight" startOffset="50%">#CAMBODIASELFDEFEND</textPath>
+    </text>
+  </g>
+
+  <!-- Title bar -->
+  <rect x="130" y="760" width="820" height="120" rx="22" fill="url(#barGradient)" opacity="0.95"/>
+  <text x="540" y="810" fill="#ffffff" text-anchor="middle" font-family="'Avenir Next', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="40" font-weight="900">THAILAND ATTACKS FIRST,</text>
+  <text x="540" y="855" fill="#ffffff" text-anchor="middle" font-family="'Avenir Next', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="38" font-weight="800">CAMBODIA DEFENDS</text>
+
+  <!-- Sub brand -->
+  <g transform="translate(720 900)">
+    <rect width="220" height="46" rx="18" fill="#ffffff" opacity="0.92"/>
+    <rect x="12" y="12" width="22" height="22" rx="6" fill="#21c99d"/>
+    <text x="48" y="31" fill="#0c1224" font-family="'Avenir Next', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="18" font-weight="700">Made with twibbonizer</text>
+  </g>
+</svg>

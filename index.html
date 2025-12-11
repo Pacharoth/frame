@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Campaign Frame</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">#WeWillNeverForgetOurHero</p>
+        <h1>Build your campaign frame</h1>
+        <p class="lede">
+          Upload your picture, place it behind the campaign frame, preview it live, and download the final artwork.
+        </p>
+      </div>
+    </header>
+
+    <section class="panel">
+      <div class="controls">
+        <label class="file-picker">
+          <input type="file" id="photoInput" accept="image/*">
+          <span class="cta">Upload your photo</span>
+          <span class="hint">PNG or JPG, square works best</span>
+        </label>
+
+        <div class="frame-select">
+          <label for="frameChooser">Frame</label>
+          <select id="frameChooser">
+            <option value="assets/cambodia-frame.svg">#WeWillNeverForgetOurHero</option>
+          </select>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-header">
+            <div>
+              <p class="tool-title">Photo controls</p>
+              <p class="tool-desc">Zoom, rotate, drag to fit inside the frame.</p>
+            </div>
+          </div>
+          <div class="range-row">
+            <label for="photoZoom">Zoom</label>
+            <input type="range" id="photoZoom" min="50" max="200" value="100">
+            <span class="value" id="photoZoomValue">100%</span>
+          </div>
+          <div class="range-row">
+            <label for="photoRotate">Rotation</label>
+            <input type="range" id="photoRotate" min="-180" max="180" value="0">
+            <span class="value" id="photoRotateValue">0°</span>
+          </div>
+          <div class="toggle-row">
+            <label class="switch">
+              <input type="checkbox" id="blurToggle">
+              <span class="slider"></span>
+            </label>
+            <div class="toggle-copy">
+              <p class="toggle-title">Blur background</p>
+              <p class="toggle-sub">Soft blur before the frame overlay.</p>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button id="resetPhotoBtn" type="button" class="ghost">Reset photo position</button>
+          </div>
+          <p class="note">Tip: drag the photo directly on the canvas to re-center it.</p>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-header">
+            <div>
+              <p class="tool-title">Add text</p>
+              <p class="tool-desc">Move, recolor, rotate your caption.</p>
+            </div>
+          </div>
+          <div class="text-row">
+            <input type="text" id="textInput" placeholder="Enter your text">
+            <button id="addTextBtn" type="button">Add text</button>
+            <button id="doneTextBtn" type="button" class="ghost">Done</button>
+          </div>
+          <div class="range-row">
+            <label for="textSize">Text size</label>
+            <input type="range" id="textSize" min="14" max="90" value="36">
+            <span class="value" id="textSizeValue">36px</span>
+          </div>
+          <div class="range-row">
+            <label for="textRotation">Text rotation</label>
+            <input type="range" id="textRotation" min="-180" max="180" value="0">
+            <span class="value" id="textRotationValue">0°</span>
+          </div>
+          <div class="color-row" id="colorPalette">
+            <button class="color-swatch active" data-color="#000000" style="background:#000000"></button>
+            <button class="color-swatch" data-color="#ffffff" style="background:#ffffff"></button>
+            <button class="color-swatch" data-color="#f7d002" style="background:#f7d002"></button>
+            <button class="color-swatch" data-color="#ff3d6a" style="background:#ff3d6a"></button>
+            <button class="color-swatch" data-color="#2d7bff" style="background:#2d7bff"></button>
+            <button class="color-swatch" data-color="#0dc99f" style="background:#0dc99f"></button>
+            <button class="color-swatch" data-color="#f97316" style="background:#f97316"></button>
+          </div>
+          <div class="btn-row">
+            <button id="deleteTextBtn" type="button" class="ghost">Remove selected text</button>
+          </div>
+          <p class="note">
+            Click text on the canvas to move it. Use sliders to rotate or resize, then hit Done to lock the selection.
+          </p>
+        </div>
+
+        <div class="btn-row">
+          <button id="previewBtn" type="button">Preview</button>
+          <button id="downloadBtn" type="button" disabled>Download PNG</button>
+        </div>
+      </div>
+
+      <div class="preview">
+        <div class="canvas-wrap">
+          <canvas id="previewCanvas" width="1080" height="1080"></canvas>
+        </div>
+        <div class="status">
+          <p id="statusText">Waiting for your photo…</p>
+          <p class="tip">Tip: choose a centered, high-resolution photo for a clean result.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
