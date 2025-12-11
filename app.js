@@ -15,12 +15,16 @@ const textInput = document.getElementById("textInput");
 const addTextBtn = document.getElementById("addTextBtn");
 const doneTextBtn = document.getElementById("doneTextBtn");
 const deleteTextBtn = document.getElementById("deleteTextBtn");
+const fontFamilySelect = document.getElementById("fontFamily");
+const styleToggleButtons = Array.from(document.querySelectorAll(".chip[data-style]"));
 const textSizeInput = document.getElementById("textSize");
 const textSizeValue = document.getElementById("textSizeValue");
 const textRotationInput = document.getElementById("textRotation");
 const textRotationValue = document.getElementById("textRotationValue");
 const colorPalette = document.getElementById("colorPalette");
 const dropZone = document.getElementById("dropZone");
+const filterRow = document.getElementById("filterRow");
+const accordions = Array.from(document.querySelectorAll(".accordion"));
 
 const CANVAS_SIZE = 1080;
 const DOWNLOAD_NAME = "wewillneverforget-hero.png";
@@ -28,8 +32,11 @@ const textDefaults = {
   size: 36,
   color: "#000000",
   rotation: 0,
-  fontFamily: "'Avenir Next', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+  fontFamily: "Roboto, 'Helvetica Neue', Arial, sans-serif",
   weight: 800,
+  italic: false,
+  underline: false,
+  strike: false,
 };
 
 const frames = [
@@ -40,6 +47,14 @@ const frames = [
   },
 ];
 
+const filterPresets = {
+  original: "none",
+  calusa: "contrast(1.05) saturate(1.25) hue-rotate(-8deg)",
+  cannes: "brightness(1.05) saturate(1.15) contrast(1.05)",
+  melawai: "contrast(1.1) saturate(1.1) hue-rotate(12deg)",
+  mono: "grayscale(1) contrast(1.05)",
+};
+
 const state = {
   userImage: null,
   frameImage: null,
@@ -48,6 +63,7 @@ const state = {
   photoRotation: 0,
   photoOffset: { x: 0, y: 0 },
   blurBackground: false,
+  filter: "original",
   texts: [],
   activeTextId: null,
   drag: {
@@ -84,18 +100,23 @@ function drawUserPhoto() {
   const base = getBaseImageScale(state.userImage);
   const scale = base * state.photoScale;
 
+  const filterString = buildFilterString(true);
+
   ctx.save();
   ctx.translate(CANVAS_SIZE / 2 + state.photoOffset.x, CANVAS_SIZE / 2 + state.photoOffset.y);
   ctx.rotate((state.photoRotation * Math.PI) / 180);
   ctx.scale(scale, scale);
-  ctx.filter = state.blurBackground ? "blur(6px)" : "none";
+  ctx.filter = filterString;
   ctx.drawImage(state.userImage, -state.userImage.width / 2, -state.userImage.height / 2);
   ctx.restore();
   ctx.filter = "none";
 }
 
 function setFontForItem(item) {
-  ctx.font = `${textDefaults.weight} ${item.size}px ${textDefaults.fontFamily}`;
+  const weight = item.weight || textDefaults.weight;
+  const italic = item.italic ? "italic " : "";
+  const fontFamily = item.fontFamily || textDefaults.fontFamily;
+  ctx.font = `${italic}${weight} ${item.size}px ${fontFamily}`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
 }
@@ -116,6 +137,32 @@ function drawText(item) {
   setFontForItem(item);
   ctx.fillStyle = item.color;
   ctx.fillText(item.text, 0, 0);
+  drawDecorations(item);
+  ctx.restore();
+}
+
+function drawDecorations(item) {
+  if (!item.underline && !item.strike) return;
+  const { width, height } = measureTextRect(item);
+  const lineWidth = Math.max(2, item.size * 0.06);
+  ctx.save();
+  setFontForItem(item);
+  ctx.strokeStyle = item.color;
+  ctx.lineWidth = lineWidth;
+  ctx.lineCap = "round";
+  if (item.underline) {
+    const y = height / 2 + lineWidth;
+    ctx.beginPath();
+    ctx.moveTo(-width / 2, y);
+    ctx.lineTo(width / 2, y);
+    ctx.stroke();
+  }
+  if (item.strike) {
+    ctx.beginPath();
+    ctx.moveTo(-width / 2, 0);
+    ctx.lineTo(width / 2, 0);
+    ctx.stroke();
+  }
   ctx.restore();
 }
 
@@ -148,7 +195,10 @@ function renderCanvas() {
   }
 
   if (state.frameReady && state.frameImage) {
+    ctx.save();
+    ctx.filter = buildFilterString(false);
     ctx.drawImage(state.frameImage, 0, 0, CANVAS_SIZE, CANVAS_SIZE);
+    ctx.restore();
   }
 
   downloadBtn.disabled = !state.userImage;
@@ -242,14 +292,30 @@ function syncTextControls() {
     textSizeValue.textContent = `${active.size}px`;
     textRotationValue.textContent = `${active.rotation}°`;
     setActiveSwatch(active.color);
+    fontFamilySelect.value = active.fontFamily;
+    syncStyleButtons(active);
   } else {
     textSizeValue.textContent = `${textSizeInput.value}px`;
     textRotationValue.textContent = `${textRotationInput.value}°`;
+    fontFamilySelect.value = textDefaults.fontFamily;
+    syncStyleButtons(textDefaults);
   }
   doneTextBtn.disabled = !hasActive;
   deleteTextBtn.disabled = !hasActive;
   textSizeInput.disabled = !hasActive;
   textRotationInput.disabled = !hasActive;
+}
+
+function syncStyleButtons(item) {
+  styleToggleButtons.forEach((btn) => {
+    const key = btn.dataset.style;
+    if (key === "bold") {
+      const weight = item.weight || textDefaults.weight;
+      btn.classList.toggle("active", weight >= 700);
+    } else {
+      btn.classList.toggle("active", Boolean(item[key]));
+    }
+  });
 }
 
 function addText() {
@@ -262,6 +328,11 @@ function addText() {
     color: getActiveSwatchColor(),
     size: parseInt(textSizeInput.value, 10) || textDefaults.size,
     rotation: parseInt(textRotationInput.value, 10) || textDefaults.rotation,
+    fontFamily: textDefaults.fontFamily,
+    weight: textDefaults.weight,
+    italic: textDefaults.italic,
+    underline: textDefaults.underline,
+    strike: textDefaults.strike,
   };
   state.texts.push(newText);
   setActiveText(newText);
@@ -315,6 +386,18 @@ function deleteActiveText() {
   setActiveText(null);
   renderCanvas();
   setStatus("Text removed.");
+}
+
+function buildFilterString(includeBlur) {
+  const preset = filterPresets[state.filter] || filterPresets.original;
+  const pieces = [];
+  if (includeBlur && state.blurBackground) {
+    pieces.push("blur(6px)");
+  }
+  if (preset && preset !== "none") {
+    pieces.push(preset);
+  }
+  return pieces.join(" ").trim() || "none";
 }
 
 photoInput.addEventListener("change", (event) => {
@@ -398,6 +481,44 @@ textInput.addEventListener("keydown", (event) => {
 textSizeInput.addEventListener("input", updateActiveTextSize);
 textRotationInput.addEventListener("input", updateActiveTextRotation);
 
+fontFamilySelect.addEventListener("change", (event) => {
+  const value = event.target.value;
+  textDefaults.fontFamily = value;
+  const active = getActiveText();
+  if (active) {
+    active.fontFamily = value;
+    renderCanvas();
+  }
+});
+
+styleToggleButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const key = btn.dataset.style;
+    const next = !btn.classList.contains("active");
+    btn.classList.toggle("active", next);
+    if (key === "bold") {
+      const weight = next ? 800 : 500;
+      textDefaults.weight = weight;
+      const active = getActiveText();
+      if (active) active.weight = weight;
+    } else {
+      textDefaults[key] = next;
+      const active = getActiveText();
+      if (active) active[key] = next;
+    }
+    renderCanvas();
+  });
+});
+
+accordions.forEach((accordion) => {
+  accordion.addEventListener("toggle", () => {
+    if (!accordion.open) return;
+    accordions.forEach((other) => {
+      if (other !== accordion) other.removeAttribute("open");
+    });
+  });
+});
+
 colorPalette.addEventListener("click", (event) => {
   const target = event.target.closest(".color-swatch");
   if (!target) return;
@@ -408,6 +529,17 @@ colorPalette.addEventListener("click", (event) => {
     active.color = color;
     renderCanvas();
   }
+});
+
+filterRow.addEventListener("click", (event) => {
+  const chip = event.target.closest(".filter-chip");
+  if (!chip) return;
+  const { filter } = chip.dataset;
+  state.filter = filter;
+  Array.from(filterRow.querySelectorAll(".filter-chip")).forEach((node) => {
+    node.classList.toggle("active", node.dataset.filter === filter);
+  });
+  renderCanvas();
 });
 
 previewBtn.addEventListener("click", () => {
