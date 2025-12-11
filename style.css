@@ -421,8 +421,18 @@ h1 {
 
 .text-row {
   display: grid;
-  grid-template-columns: 1fr auto auto;
   gap: 8px;
+}
+
+.text-main-row {
+  grid-template-columns: 1fr;
+}
+
+.text-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .text-style-row {
@@ -534,9 +544,9 @@ h1 {
 }
 
 #addTextBtn {
-  background: linear-gradient(120deg, var(--accent), #ff7c5f);
+  background: linear-gradient(120deg, var(--accent), var(--accent-2));
   color: #fff;
-  box-shadow: 0 12px 24px rgba(255, 61, 106, 0.24);
+  box-shadow: 0 12px 24px rgba(11, 87, 208, 0.22);
 }
 
 #addTextBtn:hover,
