@@ -79,16 +79,8 @@ function setStatus(message) {
 }
 
 function drawPlaceholder() {
-  const gradient = ctx.createLinearGradient(0, 0, CANVAS_SIZE, CANVAS_SIZE);
-  gradient.addColorStop(0, "#1b2948");
-  gradient.addColorStop(1, "#0f1629");
-  ctx.fillStyle = gradient;
+  ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
-
-  ctx.fillStyle = "rgba(255,255,255,0.06)";
-  for (let x = -40; x < CANVAS_SIZE + 40; x += 80) {
-    ctx.fillRect(x, 0, 40, CANVAS_SIZE);
-  }
 }
 
 function getBaseImageScale(img) {

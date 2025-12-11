@@ -564,7 +564,8 @@ h1 {
 }
 
 .preview {
-  background: #0f1a33;
+  background: #ffffff;
+  border: 1px solid var(--outline);
   border-radius: 18px;
   padding: 16px;
   display: grid;
@@ -574,10 +575,10 @@ h1 {
 
 .canvas-wrap {
   position: relative;
-  background: repeating-conic-gradient(#142245 0 10deg, #0f1a33 10deg 20deg);
+  background: #ffffff;
   border-radius: 14px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--outline);
 }
 
 canvas {
@@ -587,7 +588,7 @@ canvas {
 }
 
 .status {
-  color: #ccd6f6;
+  color: var(--ink);
 }
 
 .status #statusText {
@@ -597,7 +598,7 @@ canvas {
 
 .tip {
   margin: 6px 0 0;
-  color: #9fb0d7;
+  color: var(--muted);
   font-size: 13px;
 }
 
