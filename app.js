@@ -22,6 +22,7 @@ const textSizeValue = document.getElementById("textSizeValue");
 const textRotationInput = document.getElementById("textRotation");
 const textRotationValue = document.getElementById("textRotationValue");
 const textOverFrameToggle = document.getElementById("textOverFrame");
+const systemColorSelect = document.getElementById("systemColor");
 const frameSelectionView = document.getElementById("frameSelectionView");
 const builderView = document.getElementById("builderView");
 const frameCardGrid = document.getElementById("frameCardGrid");
@@ -98,6 +99,12 @@ const frames = [
     src: "assets/Frame5.png"
   },
 ];
+
+const systemColors = {
+  linux: "#f0c674",
+  windows: "#0a64c5",
+  macos: "#0b84ff",
+};
 
 function populateFrameChooser() {
   if (!frameChooser) return;
@@ -520,6 +527,15 @@ function getActiveSwatchColor() {
   return swatch ? swatch.dataset.color : textDefaults.color;
 }
 
+function setTextColor(color) {
+  setActiveSwatch(color);
+  const active = getActiveText();
+  if (active) {
+    active.color = color;
+  }
+  renderCanvas();
+}
+
 function deleteActiveText() {
   if (!state.activeTextId) return;
   state.texts = state.texts.filter((t) => t.id !== state.activeTextId);
@@ -689,6 +705,17 @@ filterRow.addEventListener("click", (event) => {
   });
   renderCanvas();
 });
+
+if (systemColorSelect) {
+  systemColorSelect.addEventListener("change", (event) => {
+    const value = event.target.value;
+    if (!value) return;
+    const color = systemColors[value];
+    if (color) {
+      setTextColor(color);
+    }
+  });
+}
 
 previewBtn.addEventListener("click", () => {
   if (!state.userImage) {

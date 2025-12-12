@@ -50,6 +50,7 @@ Guidelines for updating and maintaining each part of this small, static web app.
 - Colors are defined by `.color-swatch` buttons in `index.html`; add/remove swatches there and keep `textDefaults.color` aligned.
 - Fonts: imports at the top of `style.css`; add a new `@import` and a `<option>` in `#fontFamily` to expose it.
 - Sizing/rotation ranges come from `#textSize` and `#textRotation` inputs; update their min/max values alongside the display text in `syncTextControls()`.
+- System color presets: `#systemColor` dropdown maps to `systemColors` in `app.js` (linux/windows/macos). Update the map to change preset hex values.
 - Layer toggle: `#textOverFrame` lets you render text above the frame (checked) or sandwiched between the photo and frame (unchecked) to suit different artworks.
 - Text bounding/drag math sits in `measureTextRect()`, `hitTestText()`, and pointer handlers; keep units consistent with `CANVAS_SIZE` if you change canvas size.
 
