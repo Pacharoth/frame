@@ -30,12 +30,7 @@
 
         <div class="frame-select">
           <label for="frameChooser">Frame</label>
-          <select id="frameChooser" data-tour="frame">
-            <option value="assets/cambodia-frame.svg">#WeWillNeverForgetOurHero</option>
-            <option value="assets/sunrise-frame.svg">Sunrise Solidarity</option>
-            <option value="assets/solidarity-ribbon-frame.svg">Solidarity Ribbon</option>
-            <option value="assets/minimal-mono-frame.svg">Minimal Mono</option>
-          </select>
+          <select id="frameChooser" data-tour="frame"></select>
         </div>
 
         <details class="tool-card accordion" open data-tour="photo-controls">
@@ -93,6 +88,7 @@
             <div class="text-row text-style-row">
               <label class="sr-only" for="fontFamily">Font</label>
               <select id="fontFamily" class="font-select">
+                <option value="'Battambang', 'Helvetica Neue', Arial, sans-serif">Battambang</option>
                 <option value="Roboto, 'Helvetica Neue', Arial, sans-serif">Roboto</option>
                 <option value="'Roboto Slab', 'Helvetica Neue', Arial, sans-serif">Roboto Slab</option>
                 <option value="'Montserrat', 'Helvetica Neue', Arial, sans-serif">Montserrat</option>
@@ -122,6 +118,16 @@
               <button class="color-swatch" data-color="#2d7bff" style="background:#2d7bff"></button>
               <button class="color-swatch" data-color="#0dc99f" style="background:#0dc99f"></button>
               <button class="color-swatch" data-color="#f97316" style="background:#f97316"></button>
+            </div>
+            <div class="toggle-row">
+              <label class="switch">
+                <input type="checkbox" id="textOverFrame" checked>
+                <span class="slider"></span>
+              </label>
+              <div class="toggle-copy">
+                <p class="toggle-title">Text above frame</p>
+                <p class="toggle-sub">Uncheck to place text between photo and frame.</p>
+              </div>
             </div>
             <div class="btn-row">
               <button id="deleteTextBtn" type="button" class="ghost">Remove selected text</button>

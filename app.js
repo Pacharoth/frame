@@ -21,6 +21,7 @@ const textSizeInput = document.getElementById("textSize");
 const textSizeValue = document.getElementById("textSizeValue");
 const textRotationInput = document.getElementById("textRotation");
 const textRotationValue = document.getElementById("textRotationValue");
+const textOverFrameToggle = document.getElementById("textOverFrame");
 const colorPalette = document.getElementById("colorPalette");
 const dropZone = document.getElementById("dropZone");
 const filterRow = document.getElementById("filterRow");
@@ -33,7 +34,7 @@ const textDefaults = {
   size: 36,
   color: "#000000",
   rotation: 0,
-  fontFamily: "Roboto, 'Helvetica Neue', Arial, sans-serif",
+  fontFamily: "'Battambang', 'Helvetica Neue', Arial, sans-serif",
   weight: 800,
   italic: false,
   underline: false,
@@ -41,27 +42,46 @@ const textDefaults = {
 };
 
 const frames = [
+  // {
+  //   id: "hero",
+  //   name: "#WeWillNeverForgetOurHero",
+  //   src: "assets/cambodia-frame.svg",
+  // },
+  // {
+  //   id: "sunrise",
+  //   name: "Sunrise Solidarity",
+  //   src: "assets/sunrise-frame.svg",
+  // },
+  // {
+  //   id: "ribbon",
+  //   name: "Solidarity Ribbon",
+  //   src: "assets/solidarity-ribbon-frame.svg",
+  // },
+  // {
+  //   id: "mono",
+  //   name: "Minimal Mono",
+  //   src: "assets/minimal-mono-frame.svg",
+  // },
   {
-    id: "hero",
-    name: "#WeWillNeverForgetOurHero",
-    src: "assets/cambodia-frame.svg",
-  },
-  {
-    id: "sunrise",
-    name: "Sunrise Solidarity",
-    src: "assets/sunrise-frame.svg",
-  },
-  {
-    id: "ribbon",
-    name: "Solidarity Ribbon",
-    src: "assets/solidarity-ribbon-frame.svg",
-  },
-  {
-    id: "mono",
-    name: "Minimal Mono",
-    src: "assets/minimal-mono-frame.svg",
-  },
+    id:"Frame_kh",
+    name:"Frame 1",
+    src:"assets/Frame_kh_2.png"
+  }
+  
 ];
+
+function populateFrameChooser() {
+  if (!frameChooser) return;
+  frameChooser.innerHTML = "";
+  frames.forEach((frame, index) => {
+    const option = document.createElement("option");
+    option.value = frame.src;
+    option.textContent = frame.name;
+    option.dataset.frameId = frame.id;
+    if (index === 0) option.selected = true;
+    frameChooser.appendChild(option);
+  });
+}
 
 const filterPresets = {
   original: "none",
@@ -79,6 +99,7 @@ const state = {
   photoRotation: 0,
   photoOffset: { x: 0, y: 0 },
   blurBackground: false,
+  textOverFrame: true,
   filter: "original",
   texts: [],
   activeTextId: null,
@@ -190,6 +211,14 @@ function drawTextOutline(item) {
   ctx.setLineDash([]);
 }
 
+function drawTextsLayer() {
+  state.texts.forEach((text) => drawText(text));
+  const activeText = getActiveText();
+  if (activeText) {
+    drawTextOutline(activeText);
+  }
+}
+
 function renderCanvas() {
   ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
@@ -199,10 +228,8 @@ function renderCanvas() {
     drawPlaceholder();
   }
 
-  state.texts.forEach((text) => drawText(text));
-  const activeText = getActiveText();
-  if (activeText) {
-    drawTextOutline(activeText);
+  if (!state.textOverFrame) {
+    drawTextsLayer(); // text between photo and frame
   }
 
   if (state.frameReady && state.frameImage) {
@@ -210,6 +237,10 @@ function renderCanvas() {
     ctx.filter = buildFilterString(false);
     ctx.drawImage(state.frameImage, 0, 0, CANVAS_SIZE, CANVAS_SIZE);
     ctx.restore();
+  }
+
+  if (state.textOverFrame) {
+    drawTextsLayer(); // text above frame
   }
 
   downloadBtn.disabled = !state.userImage;
@@ -470,6 +501,13 @@ blurToggle.addEventListener("change", (event) => {
   renderCanvas();
 });
 
+if (textOverFrameToggle) {
+  textOverFrameToggle.addEventListener("change", (event) => {
+    state.textOverFrame = event.target.checked;
+    renderCanvas();
+  });
+}
+
 resetPhotoBtn.addEventListener("click", () => {
   resetPhotoTransform();
   renderCanvas();
@@ -626,6 +664,8 @@ canvas.addEventListener("pointermove", (event) => {
 
 setActiveSwatch(getActiveSwatchColor());
 syncTextControls();
+state.textOverFrame = textOverFrameToggle ? textOverFrameToggle.checked : true;
+populateFrameChooser();
 
 // Initial load
 loadFrame(frames[0].src)
