@@ -1,0 +1,32 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sunriseRing" x1="140" y1="160" x2="940" y2="920" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF8A5C"/>
+      <stop offset="0.45" stop-color="#FF4D6D"/>
+      <stop offset="1" stop-color="#6A5BFF"/>
+    </linearGradient>
+    <linearGradient id="sunriseGlow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="0.4" stop-color="#FFFFFF" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="sunriseBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#10204F"/>
+      <stop offset="1" stop-color="#2F2E7A"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1080" height="1080" fill="none"/>
+
+  <circle cx="540" cy="540" r="440" stroke="url(#sunriseRing)" stroke-width="160" stroke-linecap="round"/>
+  <circle cx="540" cy="540" r="440" stroke="url(#sunriseGlow)" stroke-width="160" stroke-linecap="round" style="mix-blend-mode:screen"/>
+
+  <circle cx="540" cy="540" r="360" stroke="#FFFFFF" stroke-width="6" opacity="0.4"/>
+  <rect x="150" y="150" width="780" height="780" rx="120" stroke="#FFFFFF" stroke-width="8" opacity="0.35"/>
+
+  <rect x="150" y="760" width="780" height="140" rx="32" fill="url(#sunriseBar)" opacity="0.94"/>
+  <text x="540" y="830" fill="#FFFFFF" text-anchor="middle" font-family="'Roboto','Helvetica Neue',Arial,sans-serif" font-size="44" font-weight="900">SUNRISE SOLIDARITY</text>
+  <text x="540" y="875" fill="#F9D976" text-anchor="middle" font-family="'Roboto','Helvetica Neue',Arial,sans-serif" font-size="26" font-weight="700">UNITED FOR HOPE</text>
+
+  <text x="540" y="170" fill="#FFFFFF" text-anchor="middle" font-family="'Roboto','Helvetica Neue',Arial,sans-serif" font-size="20" font-weight="700" opacity="0.9">#SHARETHELIGHT</text>
+</svg>

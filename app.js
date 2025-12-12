@@ -45,6 +45,21 @@ const frames = [
     name: "#WeWillNeverForgetOurHero",
     src: "assets/cambodia-frame.svg",
   },
+  {
+    id: "sunrise",
+    name: "Sunrise Solidarity",
+    src: "assets/sunrise-frame.svg",
+  },
+  {
+    id: "ribbon",
+    name: "Solidarity Ribbon",
+    src: "assets/solidarity-ribbon-frame.svg",
+  },
+  {
+    id: "mono",
+    name: "Minimal Mono",
+    src: "assets/minimal-mono-frame.svg",
+  },
 ];
 
 const filterPresets = {

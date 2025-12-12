@@ -1,0 +1,36 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ribbonMain" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0B57D0"/>
+      <stop offset="1" stop-color="#21C99D"/>
+    </linearGradient>
+    <linearGradient id="ribbonAccent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF7A5A"/>
+      <stop offset="1" stop-color="#F13DB4"/>
+    </linearGradient>
+    <linearGradient id="ribbonLabel" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="1" stop-color="#1F2937"/>
+    </linearGradient>
+    <filter id="ribbonShadow" x="80" y="760" width="920" height="240" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="1080" height="1080" fill="none"/>
+
+  <rect x="90" y="90" width="900" height="900" rx="120" stroke="#FFFFFF" stroke-width="18" opacity="0.75"/>
+  <rect x="140" y="140" width="800" height="800" rx="100" stroke="#0B57D0" stroke-width="10" opacity="0.4"/>
+
+  <path d="M80 240C300 190 500 200 780 120L820 210C560 310 360 320 160 360Z" fill="url(#ribbonAccent)" opacity="0.9"/>
+  <path d="M1000 820C780 870 580 860 300 940L260 850C520 750 720 740 920 700Z" fill="url(#ribbonMain)" opacity="0.92"/>
+
+  <g filter="url(#ribbonShadow)">
+    <rect x="150" y="780" width="780" height="140" rx="26" fill="url(#ribbonLabel)" opacity="0.96"/>
+  </g>
+  <text x="540" y="850" fill="#FFFFFF" text-anchor="middle" font-family="'Roboto','Helvetica Neue',Arial,sans-serif" font-size="40" font-weight="900">SOLIDARITY RIBBON</text>
+  <text x="540" y="895" fill="#8BD6FF" text-anchor="middle" font-family="'Roboto','Helvetica Neue',Arial,sans-serif" font-size="24" font-weight="700">TOGETHER WE STAND</text>
+
+  <circle cx="180" cy="180" r="36" fill="#FFFFFF" opacity="0.85"/>
+  <text x="180" y="188" fill="#0B57D0" text-anchor="middle" font-family="'Roboto','Helvetica Neue',Arial,sans-serif" font-size="22" font-weight="900">2024</text>
+</svg>
