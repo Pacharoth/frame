@@ -14,6 +14,7 @@ Guidelines for updating and maintaining each part of this small, static web app.
 
 ## Canvas and state
 - `CANVAS_SIZE` (default 1080) sets the square export size; keep frame assets matching this resolution for sharp output.
+- `PHOTO_MASK_RADIUS` (default 360) clips the uploaded photo to a centered circle; adjust to match the inner opening of your frame art.
 - `DOWNLOAD_NAME` controls the saved filename.
 - State shape is in `state` near the top of `app.js`; extend it if you add new controls so rendering can stay centralized in `renderCanvas()`.
 

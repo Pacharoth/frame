@@ -27,6 +27,7 @@ const filterRow = document.getElementById("filterRow");
 const accordions = Array.from(document.querySelectorAll(".accordion"));
 
 const CANVAS_SIZE = 1080;
+const PHOTO_MASK_RADIUS = 360; // Circular clip radius for the uploaded photo (centered on the canvas)
 const DOWNLOAD_NAME = "wewillneverforget-hero.png";
 const textDefaults = {
   size: 36,
@@ -110,6 +111,9 @@ function drawUserPhoto() {
   const filterString = buildFilterString(true);
 
   ctx.save();
+  ctx.beginPath();
+  ctx.arc(CANVAS_SIZE / 2, CANVAS_SIZE / 2, PHOTO_MASK_RADIUS, 0, Math.PI * 2);
+  ctx.clip();
   ctx.translate(CANVAS_SIZE / 2 + state.photoOffset.x, CANVAS_SIZE / 2 + state.photoOffset.y);
   ctx.rotate((state.photoRotation * Math.PI) / 180);
   ctx.scale(scale, scale);
