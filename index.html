@@ -20,7 +20,16 @@
       </div>
     </header>
 
-    <section class="panel">
+    <section class="panel frame-select-view" id="frameSelectionView">
+      <div class="frame-select-copy">
+        <p class="eyebrow">Step 1</p>
+        <h2>Select a frame</h2>
+        <p class="lede">Pick a campaign frame card below. You can change later if needed.</p>
+      </div>
+      <div class="frame-card-grid" id="frameCardGrid"></div>
+    </section>
+
+    <section class="panel view-hidden" id="builderView">
       <div class="controls">
         <label class="file-picker" id="dropZone" data-tour="upload">
           <input type="file" id="photoInput" accept="image/*">
@@ -29,8 +38,12 @@
         </label>
 
         <div class="frame-select">
-          <label for="frameChooser">Frame</label>
+          <div class="frame-select-header">
+            <label for="frameChooser">Frame</label>
+            <button id="changeFrameBtn" type="button" class="ghost">Change frame</button>
+          </div>
           <select id="frameChooser" data-tour="frame"></select>
+          <p class="note">Selected: <span id="selectedFrameLabel">None selected yet</span></p>
         </div>
 
         <details class="tool-card accordion" open data-tour="photo-controls">
@@ -176,7 +189,7 @@
     </section>
   </main>
 
-  <script src="app.js?id=21312"></script>
-  <script src="guide.js?id=123"></script>
+  <script src="app.js?id=21311"></script>
+  <script src="guide.js?id=1235"></script>
 </body>
 </html>

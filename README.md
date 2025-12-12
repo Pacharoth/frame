@@ -35,6 +35,9 @@ Guidelines for updating and maintaining each part of this small, static web app.
 - Add new frames by placing artwork in `assets/` and adding an entry to the `frames` array in `app.js` (`id`, `name`, `src`). The dropdown is auto-populated from this array; no manual HTML options needed.
 - Keep assets square; if you change `CANVAS_SIZE`, adjust asset dimensions accordingly.
 - Sample frames included for testing: `cambodia-frame.svg`, `sunrise-frame.svg`, `solidarity-ribbon-frame.svg`, `minimal-mono-frame.svg`.
+- Frame picking flow: the landing view shows cards from the `frames` array (`#frameCardGrid`). Clicking a card calls `selectFrame()` to load it, highlights the card, updates the dropdown, and switches to the builder view. Use `#changeFrameBtn` to return to the card view.
+- To change the default landing frame or order: edit the `frames` array; cards and the dropdown will reflect the order. The first entry is treated as the default selection when the user picks a card and enters the builder.
+- To customize card rendering: adjust `renderFrameCards()` in `app.js` for markup or labels, and `.frame-card*` styles in `style.css` for spacing/visuals.
 
 ## Photo controls
 - Sliders: `#photoZoom` (10–200%) and `#photoRotate` (-180–180). Update ranges in HTML and defaults in `resetPhotoTransform()` if you change behavior.

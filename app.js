@@ -22,6 +22,11 @@ const textSizeValue = document.getElementById("textSizeValue");
 const textRotationInput = document.getElementById("textRotation");
 const textRotationValue = document.getElementById("textRotationValue");
 const textOverFrameToggle = document.getElementById("textOverFrame");
+const frameSelectionView = document.getElementById("frameSelectionView");
+const builderView = document.getElementById("builderView");
+const frameCardGrid = document.getElementById("frameCardGrid");
+const changeFrameBtn = document.getElementById("changeFrameBtn");
+const selectedFrameLabel = document.getElementById("selectedFrameLabel");
 const colorPalette = document.getElementById("colorPalette");
 const dropZone = document.getElementById("dropZone");
 const filterRow = document.getElementById("filterRow");
@@ -42,32 +47,56 @@ const textDefaults = {
 };
 
 const frames = [
-  // {
-  //   id: "hero",
-  //   name: "#WeWillNeverForgetOurHero",
-  //   src: "assets/cambodia-frame.svg",
-  // },
-  // {
-  //   id: "sunrise",
-  //   name: "Sunrise Solidarity",
-  //   src: "assets/sunrise-frame.svg",
-  // },
-  // {
-  //   id: "ribbon",
-  //   name: "Solidarity Ribbon",
-  //   src: "assets/solidarity-ribbon-frame.svg",
-  // },
-  // {
-  //   id: "mono",
-  //   name: "Minimal Mono",
-  //   src: "assets/minimal-mono-frame.svg",
-  // },
   {
-    id:"Frame_kh",
-    name:"Frame 1",
-    src:"assets/Frame_kh_2.png"
-  }
-  
+    id: "frame1_l",
+    name: "Frame 1 (L)",
+    src: "assets/Frame1_with_letter.png",
+  },
+  {
+    id: "frame1",
+    name: "Frame 1",
+    src: "assets/Frame1.png",
+  },
+  {
+    id: "frame2_l",
+    name: "Frame 2 (L)",
+    src: "assets/Frame2_with_letter.png",
+  },
+    {
+    id: "frame2",
+    name: "Frame 2",
+    src: "assets/Frame2.png",
+  },
+  {
+    id: "frame3_l",
+    name: "Frame 3 (L)",
+    src: "assets/Frame3_with_letter.png",
+  },
+   {
+    id: "frame3",
+    name: "Frame 3",
+    src: "assets/Frame3.png",
+  },
+  {
+    id: "frame4_l",
+    name: "Frame 4 (L)",
+    src: "assets/Frame4_with_letter.png",
+  },
+  {
+    id: "frame5_l",
+    name: "Frame 5 (L)",
+    src: "assets/Frame5_with_letter.png",
+  },
+    {
+    id: "frame5_1",
+    name: "Frame 5 (1)",
+    src: "assets/Frame5_1.png"
+  },
+  {
+    id: "frame5",
+    name: "Frame 5",
+    src: "assets/Frame5.png"
+  },
 ];
 
 function populateFrameChooser() {
@@ -81,6 +110,54 @@ function populateFrameChooser() {
     if (index === 0) option.selected = true;
     frameChooser.appendChild(option);
   });
+}
+
+function renderFrameCards() {
+  if (!frameCardGrid) return;
+  frameCardGrid.innerHTML = "";
+  frames.forEach((frame) => {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "frame-card";
+    card.dataset.frameId = frame.id;
+    card.innerHTML = `
+      <div class="frame-thumb">
+        <img src="${frame.src}" alt="${frame.name}">
+      </div>
+      <div class="frame-meta">
+        <p class="frame-name">${frame.name}</p>
+        <span class="frame-badge">Select</span>
+      </div>
+    `;
+    card.addEventListener("click", () => {
+      selectFrame(frame);
+    });
+    frameCardGrid.appendChild(card);
+  });
+}
+
+function showFrameSelection() {
+  if (frameSelectionView) frameSelectionView.classList.remove("view-hidden");
+  if (builderView) builderView.classList.add("view-hidden");
+}
+
+function showBuilderView() {
+  if (frameSelectionView) frameSelectionView.classList.add("view-hidden");
+  if (builderView) builderView.classList.remove("view-hidden");
+}
+
+function highlightFrameCard(frameId) {
+  if (!frameCardGrid) return;
+  frameCardGrid.querySelectorAll(".frame-card").forEach((card) => {
+    card.classList.toggle("selected", card.dataset.frameId === frameId);
+  });
+}
+
+function syncFrameSelectionUI(frame) {
+  state.activeFrameId = frame.id;
+  if (frameChooser) frameChooser.value = frame.src;
+  if (selectedFrameLabel) selectedFrameLabel.textContent = frame.name;
+  highlightFrameCard(frame.id);
 }
 
 const filterPresets = {
@@ -103,6 +180,7 @@ const state = {
   filter: "original",
   texts: [],
   activeTextId: null,
+  activeFrameId: null,
   drag: {
     active: false,
     target: null,
@@ -257,6 +335,26 @@ function loadFrame(src) {
     img.onerror = reject;
     img.src = src;
   });
+}
+
+async function selectFrame(frame) {
+  if (!frame) return;
+  try {
+    state.frameReady = false;
+    setStatus("Loading frame…");
+    await loadFrame(frame.src);
+    syncFrameSelectionUI(frame);
+    showBuilderView();
+    setStatus("Frame ready. Upload a photo to get started.");
+    renderCanvas();
+  } catch (error) {
+    console.error(error);
+    setStatus("Could not load the frame asset.");
+  }
+}
+
+function getFrameBySrc(src) {
+  return frames.find((frame) => frame.src === src) || null;
 }
 
 function resetPhotoTransform() {
@@ -470,15 +568,9 @@ dropZone.addEventListener("drop", (event) => {
 
 frameChooser.addEventListener("change", async (event) => {
   const src = event.target.value;
-  try {
-    state.frameReady = false;
-    setStatus("Loading frame…");
-    await loadFrame(src);
-    setStatus("Frame ready. Upload a photo to get started.");
-    renderCanvas();
-  } catch (error) {
-    console.error(error);
-    setStatus("Could not load the frame asset.");
+  const frame = getFrameBySrc(src);
+  if (frame) {
+    selectFrame(frame);
   }
 });
 
@@ -505,6 +597,13 @@ if (textOverFrameToggle) {
   textOverFrameToggle.addEventListener("change", (event) => {
     state.textOverFrame = event.target.checked;
     renderCanvas();
+  });
+}
+
+if (changeFrameBtn) {
+  changeFrameBtn.addEventListener("click", () => {
+    showFrameSelection();
+    setStatus("Pick a frame to continue.");
   });
 }
 
@@ -666,11 +765,7 @@ setActiveSwatch(getActiveSwatchColor());
 syncTextControls();
 state.textOverFrame = textOverFrameToggle ? textOverFrameToggle.checked : true;
 populateFrameChooser();
-
-// Initial load
-loadFrame(frames[0].src)
-  .then(() => {
-    setStatus("Frame ready. Upload a photo to get started.");
-    renderCanvas();
-  })
-  .catch(() => setStatus("Could not load the frame asset."));
+renderFrameCards();
+showFrameSelection();
+setStatus("Select a frame to get started.");
+renderCanvas();

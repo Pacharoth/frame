@@ -8,6 +8,15 @@ document.addEventListener("DOMContentLoaded", () => {
       showProgress: true,
       steps: [
         {
+          element: "#frameCardGrid",
+          popover: {
+            title: "Select a frame",
+            description: "Start by picking a frame card. You can change it later with “Change frame.”",
+            side: "bottom",
+            align: "center",
+          },
+        },
+        {
           element: '[data-tour="upload"]',
           popover: {
             title: "Upload your photo",
