@@ -168,7 +168,7 @@ h1 {
   border-radius: var(--radius);
   padding: 18px 16px;
   display: block;
-  background: var(--surface);
+  background: transparent;
   cursor: pointer;
   transition: all 160ms ease;
   text-align: center;
@@ -176,13 +176,13 @@ h1 {
 
 .file-picker:hover {
   border-color: var(--accent);
-  background: #fff;
+  background: transparent;
 }
 
 .file-picker.dragover {
   border-color: var(--accent);
   box-shadow: 0 10px 26px rgba(11, 87, 208, 0.15);
-  background: #fff;
+  background: transparent;
 }
 
 .file-picker input {
@@ -323,7 +323,7 @@ h1 {
 
 @media (max-width: 680px) {
   .canvas-wrap {
-    border-radius: 12px;
+    border-radius: 0;
   }
 
   .btn-row {
@@ -658,7 +658,8 @@ h1 {
   background: #ffffff;
   border: 1px solid var(--outline);
   border-radius: 18px;
-  padding: 16px;
+  padding: 0;
+  overflow: hidden;
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
@@ -666,10 +667,10 @@ h1 {
 
 .canvas-wrap {
   position: relative;
-  background: #ffffff;
-  border-radius: 14px;
+  background: transparent;
+  border-radius: 0;
   overflow: hidden;
-  border: 1px solid var(--outline);
+  border: 0;
 }
 
 canvas {
@@ -680,6 +681,7 @@ canvas {
 
 .status {
   color: var(--ink);
+  padding: 0 16px 16px;
 }
 
 .status #statusText {

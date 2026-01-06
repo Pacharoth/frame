@@ -34,7 +34,7 @@ const filterRow = document.getElementById("filterRow");
 const accordions = Array.from(document.querySelectorAll(".accordion"));
 
 const CANVAS_SIZE = 1080;
-const PHOTO_MASK_RADIUS = 360; // Circular clip radius for the uploaded photo (centered on the canvas)
+const PHOTO_MASK_RADIUS = 1000; // Circular clip radius for the uploaded photo (centered on the canvas)
 const DOWNLOAD_NAME = "wewillneverforget-hero.png";
 const textDefaults = {
   size: 36,
@@ -210,6 +210,7 @@ function getBaseImageScale(img) {
 }
 
 function drawUserPhoto() {
+  console.log("Change the size image")
   if (!state.userImage) return;
   const base = getBaseImageScale(state.userImage);
   const scale = base * state.photoScale;
@@ -288,7 +289,7 @@ function drawTextOutline(item) {
   ctx.save();
   ctx.translate(item.x, item.y);
   ctx.rotate((item.rotation * Math.PI) / 180);
-  ctx.strokeStyle = "rgba(255,255,255,0.85)";
+  ctx.strokeStyle = "";
   ctx.lineWidth = 2;
   ctx.setLineDash([6, 4]);
   ctx.strokeRect(-width / 2 - 8, -height / 2 - 8, width + 16, height + 16);
