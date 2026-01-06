@@ -51,53 +51,58 @@ const frames = [
   {
     id: "frame1_l",
     name: "Frame 1 (L)",
-    src: "assets/Frame1_with_letter.png",
+    src: "assets/Frame_1.png",
   },
-  {
-    id: "frame1",
-    name: "Frame 1",
-    src: "assets/Frame1.png",
-  },
+  // {
+  //   id: "frame1",
+  //   name: "Frame 1",
+  //   src: "assets/Frame1.png",
+  // },
   {
     id: "frame2_l",
     name: "Frame 2 (L)",
-    src: "assets/Frame2_with_letter.png",
+    src: "assets/Frame_2.png",
   },
-    {
-    id: "frame2",
-    name: "Frame 2",
-    src: "assets/Frame2.png",
-  },
+  //   {
+  //   id: "frame2",
+  //   name: "Frame 2",
+  //   src: "assets/Frame2.png",
+  // },
   {
     id: "frame3_l",
     name: "Frame 3 (L)",
-    src: "assets/Frame3_with_letter.png",
+    src: "assets/Frame_3.png",
   },
-   {
-    id: "frame3",
-    name: "Frame 3",
-    src: "assets/Frame3.png",
-  },
+  //  {
+  //   id: "frame3",
+  //   name: "Frame 3",
+  //   src: "assets/Frame3.png",
+  // },
   {
     id: "frame4_l",
     name: "Frame 4 (L)",
-    src: "assets/Frame4_with_letter.png",
+    src: "assets/Frame_4.png",
   },
   {
     id: "frame5_l",
     name: "Frame 5 (L)",
-    src: "assets/Frame5_with_letter.png",
+    src: "assets/Frame_5.png",
   },
     {
-    id: "frame5_1",
-    name: "Frame 5 (1)",
-    src: "assets/Frame5_1.png"
+    id: "frame6_l",
+    name: "Frame 6 (L)",
+    src: "assets/Frame_6.png",
   },
-  {
-    id: "frame5",
-    name: "Frame 5",
-    src: "assets/Frame5.png"
-  },
+  //   {
+  //   id: "frame5_1",
+  //   name: "Frame 5 (1)",
+  //   src: "assets/Frame5_1.png"
+  // },
+  // {
+  //   id: "frame5",
+  //   name: "Frame 5",
+  //   src: "assets/Frame5.png"
+  // },
 ];
 
 const systemColors = {
